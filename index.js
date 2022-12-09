@@ -55,7 +55,7 @@ async function getJoke(name) {
   // TODO get date
   const date = "today";
 
-  // TODO check if joke for name and date exists
+  // check if joke for name and date exists
   let filter = { name: name, date: date };
   const cursor = client
     .db(databaseAndCollection.db)
@@ -64,22 +64,34 @@ async function getJoke(name) {
 
   result = await cursor.toArray();
 
-  // TODO if no joke exists for name and date:
-  // - Get a joke from humor api.
-  //	- If daily request limit is hit then reuse a joke from a random name with a joke for today
-  // - save joke in db (if reusing save under additional name)
-
   if (result.length == 0) {
+    // No joke exists for name and date yet
     console.log("creating joke");
-    let newJoke = {
-      name: name,
-      date: date,
-      joke: "EXJOKE",
-    };
-    const result = await client
-      .db(databaseAndCollection.db)
-      .collection(databaseAndCollection.collection)
-      .insertOne(newJoke);
+
+    const humorURI =
+      "https://api.humorapi.com/jokes/random?api-key=" +
+      process.env.HUMOR_API_KEY;
+
+    // Get a joke from humor api
+    await fetch(humorURI)
+      .then((resp) => resp.json())
+      .then(async function (json) {
+        // TODO If daily request limit is hit then reuse a joke from a random name with a joke for today
+        const newJokeStr = json.joke;
+        console.log(newJokeStr);
+        let newJoke = {
+          name: name,
+          date: date,
+          joke: newJokeStr,
+        };
+
+        // save joke in db (if reusing save under second name)
+        const result = await client
+          .db(databaseAndCollection.db)
+          .collection(databaseAndCollection.collection)
+          .insertOne(newJoke);
+      });
+
     return await getJoke(name);
   } else {
     return result[0].joke;
