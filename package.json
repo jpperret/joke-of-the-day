@@ -4,7 +4,7 @@
   "description": "CMSC335 Final Project",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   "dependencies": {
     "ejs": "^3.1.8",
     "express": "^4.18.2",
-	"dotenv": "^16.0.0",
+    "dotenv": "^16.0.0",
     "mongodb": "^4.5.0"
   }
 }
