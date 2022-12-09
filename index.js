@@ -52,11 +52,14 @@ async function connectDB() {
 }
 
 async function getJoke(name) {
-  // TODO get date
-  const date = "today";
+  // Ignore case of name
+  name = name.toUpperCase();
 
-  // check if joke for name and date exists
-  let filter = { name: name, date: date };
+  // Get date
+  const date = new Date().toDateString();
+
+  // Check if joke for name and date exists
+  const filter = { name: name, date: date };
   const cursor = client
     .db(databaseAndCollection.db)
     .collection(databaseAndCollection.collection)
@@ -66,8 +69,6 @@ async function getJoke(name) {
 
   if (result.length == 0) {
     // No joke exists for name and date yet
-    console.log("creating joke");
-
     const humorURI =
       "https://api.humorapi.com/jokes/random?api-key=" +
       process.env.HUMOR_API_KEY;
@@ -75,27 +76,52 @@ async function getJoke(name) {
     // Get a joke from humor api
     await fetch(humorURI)
       .then((resp) => resp.json())
-      .then(async function (json) {
-        // TODO If daily request limit is hit then reuse a joke from a random name with a joke for today
-        const newJokeStr = json.joke;
-        console.log(newJokeStr);
-        let newJoke = {
-          name: name,
-          date: date,
-          joke: newJokeStr,
-        };
-
-        // save joke in db (if reusing save under second name)
-        const result = await client
-          .db(databaseAndCollection.db)
-          .collection(databaseAndCollection.collection)
-          .insertOne(newJoke);
-      });
+      .then((json) => saveJoke(name, json));
 
     return await getJoke(name);
   } else {
     return result[0].joke;
   }
+}
+
+async function saveJoke(name, json) {
+  var newJokeStr;
+  if (json.status == "failure") {
+    // If daily request limit is hit then reuse a joke from a random name with a joke for today
+
+    const filter = { date: date };
+    const cursor = client
+      .db(databaseAndCollection.db)
+      .collection(databaseAndCollection.collection)
+      .find(filter);
+    const result = await cursor.toArray();
+
+    // should have 10 random jokes to chose from
+    newJokeStr = result[Math.floor(Math.random() * result.length)].joke;
+  } else {
+    newJokeStr = json.joke;
+  }
+
+  let newJoke = {
+    name: name,
+    date: date,
+    joke: newJokeStr,
+  };
+
+  // save joke in db (if reusing save under second name)
+  await client
+    .db(databaseAndCollection.db)
+    .collection(databaseAndCollection.collection)
+    .insertOne(newJoke);
+}
+
+// Used during development
+async function emptyDB() {
+  const result = await client
+    .db(databaseAndCollection.db)
+    .collection(databaseAndCollection.collection)
+    .deleteMany({});
+  return result.deletedCount;
 }
 
 app.listen(portNumber);
