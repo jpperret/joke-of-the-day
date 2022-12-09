@@ -12,6 +12,7 @@ const portNumber = 80;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.set("views", path.resolve(__dirname, "pages"));
+app.use(express.static(__dirname + "/public"));
 app.set("view engine", "ejs");
 
 app.get("/", (request, response) => {

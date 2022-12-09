@@ -6,6 +6,8 @@ This site takes in a name and gives a joke of the day based on the name.
 The joke is persisted for each name and updates daily.
 This site queries the [Humor API](https://humorapi.com)
 
+The site is hosted at https://joke-of-they-day.onrender.com
+
 ## Team Members
 
 - John Perret (jperret)
