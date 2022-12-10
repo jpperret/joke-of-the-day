@@ -10,5 +10,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping URL
-        uses: nerdify/ping-action@1.0.0
+    - uses: actions/checkout@v2
+    - name: deploy
+      run: curl ${{secrets.PING_URL}}
