@@ -21,6 +21,9 @@ app.get("/", (request, response) => {
 
 app.get("/joke", async (request, response) => {
   const name = request.query.name;
+  if (name == "") {
+    response.redirect("/");
+  }
   var variables = {
     name: name,
     joke: await getJoke(name),
@@ -102,6 +105,8 @@ async function saveJoke(name, json) {
   } else {
     newJokeStr = json.joke;
   }
+
+  const date = new Date().toDateString();
 
   let newJoke = {
     name: name,

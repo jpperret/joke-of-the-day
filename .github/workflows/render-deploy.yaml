@@ -1,4 +1,4 @@
-name: "deploy"
+name: "Deploy To Render"
 
 on:
   push:
@@ -11,5 +11,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: deploy
         run: curl ${{secrets.DEPLOY_URL}}
