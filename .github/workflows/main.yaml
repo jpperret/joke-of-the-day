@@ -10,6 +10,6 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: deploy
-      run: curl ${{secrets.PING_URL}}
+      - uses: actions/checkout@v2
+      - name: deploy
+        run: curl ${{secrets.DEPLOY_URL}}
