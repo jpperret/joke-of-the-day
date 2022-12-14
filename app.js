@@ -92,7 +92,7 @@ async function saveJoke(name, json) {
   var newJokeStr;
   if (json.status == "failure") {
     // If daily request limit is hit then reuse a joke from a random name with a joke for today
-
+    console.log("Reusing Joke");
     const filter = { date: date };
     const cursor = client
       .db(databaseAndCollection.db)
@@ -114,7 +114,7 @@ async function saveJoke(name, json) {
     joke: newJokeStr,
   };
 
-  // save joke in db (if reusing save under second name)
+  // save joke in db (if reusing joke save under second name)
   await client
     .db(databaseAndCollection.db)
     .collection(databaseAndCollection.collection)
