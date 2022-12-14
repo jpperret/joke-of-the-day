@@ -4,8 +4,15 @@
     <link rel="stylesheet" type="text/css" href="css/style.css" />
   </head>
   <body>
-    The Joke of the day for <%- name %> is
-    <!-- Maintain new lines in joke -->
-    <pre><%- joke %></pre>
+    <div class="main-wrapper">
+      <div class="name-header">
+        The Joke of the day <br>for <em id="name"><%- name %></em> is
+      </div>
+
+      <div class="joke-wrapper">
+        <!-- Maintain new lines in joke -->
+        <pre><%- joke %></pre>
+      </div>
+    </div>
   </body>
 </html>

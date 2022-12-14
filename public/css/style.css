@@ -1,0 +1,54 @@
+body {
+    background-color: #8EC5FC;
+    background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+}
+
+.main-wrapper {
+    height: 100%;
+    margin-top: 7em;
+    margin-left: 7em;
+}
+
+.name-header {
+    color: white;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bolder;
+    font-size: 4em;
+}
+
+#name {
+    -webkit-text-stroke: 2px white;
+    color: rgba(0, 0, 0, 0);
+}
+
+.joke-wrapper {
+    background-color: white;
+
+    margin-top: 1em;
+    padding: 1em;
+    
+    height: 250px;
+    width: 850px;
+
+    border-radius: 10px;
+    box-shadow:
+        0.9px 0.7px 2.2px rgba(0, 0, 0, 0.02),
+        2.1px 1.7px 5.3px rgba(0, 0, 0, 0.028),
+        4px 3.3px 10px rgba(0, 0, 0, 0.035),
+        7.1px 5.8px 17.9px rgba(0, 0, 0, 0.042),
+        13.4px 10.9px 33.4px rgba(0, 0, 0, 0.05),
+        32px 26px 80px rgba(0, 0, 0, 0.07)
+    ;
+
+    display: flex;
+    justify-content: center;
+}
+
+pre {
+    font-size: 1.5em;
+
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
