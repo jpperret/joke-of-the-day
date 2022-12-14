@@ -11,3 +11,4 @@ The site is hosted at https://joke-of-the-day.onrender.com
 ## Team Members
 - John Perret (jperret)
 - James (Jimmy) Reeves (jreeves4)
+- Devin Moon (devmoon)
