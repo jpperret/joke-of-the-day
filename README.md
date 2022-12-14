@@ -12,3 +12,4 @@ The site is hosted at https://joke-of-the-day.onrender.com
 - John Perret (jperret)
 - James (Jimmy) Reeves (jreeves4)
 - Devin Moon (devmoon)
+- Brendan Hood (bhood1)
